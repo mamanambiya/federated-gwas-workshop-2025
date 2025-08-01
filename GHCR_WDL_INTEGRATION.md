@@ -1,206 +1,208 @@
-# GitHub Container Registry Integration with WDL
+# GitHub Container Registry (GHCR) with WDL
 
-## ✅ Yes, WDL Can Use GitHub Container Registry!
+## Yes, WDL Can Use GitHub Container Registry!
 
-Your GWAS pipeline now supports **both DockerHub and GitHub Container Registry (ghcr.io)** with full automation and multi-registry publishing.
+This repository demonstrates complete integration of GitHub Container Registry with WDL workflows for federated GWAS analysis.
 
-## 🚀 What Was Implemented
+## What Was Implemented
 
-### **Multi-Registry CI/CD Pipeline**
-- ✅ **Automated builds** to both DockerHub and GitHub Container Registry
-- ✅ **Synchronized tagging** across registries
-- ✅ **Matrix-based security scanning** for both registries
-- ✅ **Unified authentication** using GitHub tokens
+### Multi-Registry CI/CD
+- **Automated builds** to both DockerHub and GitHub Container Registry
+- **Synchronized tagging** across registries
+- **Matrix-based security scanning** for both registries
+- **Unified authentication** using GitHub tokens
 
-### **WDL Configuration Options**
-- ✅ **DockerHub**: `docker: "mamana/gwas-tools:latest"`
-- ✅ **GitHub Container Registry**: `docker: "ghcr.io/mamana/gwas-tools:latest"`
-- ✅ **Flexible runtime configuration** via input JSON
-- ✅ **Default GHCR configuration** in Cromwell options
+### WDL Configuration
+- **DockerHub**: `docker: "mamana/gwas-tools:latest"`
+- **GitHub Container Registry**: `docker: "ghcr.io/mamana/gwas-tools:latest"`
+- **Flexible runtime configuration** via input JSON
+- **Default GHCR configuration** in Cromwell options
 
-### **Test Configurations**
-- ✅ **DockerHub test**: `inputs/test_gensetB.json`
-- ✅ **GHCR test**: `inputs/test_gensetB_ghcr.json`
-- ✅ **Registry-specific test scripts**
-- ✅ **Fallback mechanisms** for development
+### Complete Testing Suite
+- **DockerHub test**: `inputs/test_gensetB.json`
+- **GHCR test**: `inputs/test_gensetB_ghcr.json`
+- **Registry-specific test scripts**
+- **Fallback mechanisms** for development
 
-## 🏷️ Registry Comparison
+## Registry Comparison
 
 | Feature | DockerHub | GitHub Container Registry |
 |---------|-----------|---------------------------|
-| **WDL Support** | ✅ Full | ✅ Full |
-| **Authentication** | Separate tokens | 🎯 GitHub tokens |
-| **Free Private Images** | 1 repository | ✅ Unlimited |
-| **GitHub Integration** | External | 🎯 Native |
-| **Vulnerability Scanning** | Paid feature | ✅ Built-in |
-| **Build Integration** | Manual setup | 🎯 GitHub Actions |
-| **Bandwidth Limits** | Limited | ✅ Generous |
+| **WDL Support** | Full | Full |
+| **Authentication** | Separate tokens | GitHub tokens |
+| **Free Private Images** | 1 repository | Unlimited |
+| **GitHub Integration** | External | Native |
+| **Vulnerability Scanning** | Paid feature | Built-in |
+| **Build Integration** | Manual setup | GitHub Actions |
+| **Bandwidth Limits** | Limited | Generous |
 
-## 📁 **Files Created**
+## **Files Created**
 
-### **Multi-Registry Configuration**
-- **`.github/workflows/docker-build.yml`** - Publishes to both registries
-- **`.github/workflows/security-scan.yml`** - Scans both registry images
-- **`inputs/test_gensetB_ghcr.json`** - GHCR-specific configuration
-- **`scripts/test_ghcr.sh`** - GHCR testing script
+- `.github/workflows/docker-build.yml` - Multi-registry build pipeline
+- `.github/workflows/security-scan.yml` - Security scanning workflow
+- `inputs/test_gensetB_ghcr.json` - GHCR test configuration
+- `scripts/test_ghcr.sh` - GHCR-specific test script
+- `docs/GITHUB_CONTAINER_REGISTRY.md` - Complete documentation
+- `docs/DOCKER_CI_SETUP.md` - CI/CD setup guide
+- `docker/README.md` - Container documentation
+- `.dockerignore` - Optimized build context
+- `cromwell.options.json` - Default GHCR configuration
+- `GHCR_WDL_INTEGRATION.md` - This file
 
-### **Documentation**
-- **`docs/GITHUB_CONTAINER_REGISTRY.md`** - Comprehensive GHCR guide
-- **`GHCR_WDL_INTEGRATION.md`** - This summary document
+## **Usage Examples**
 
-## 🔧 **Usage Examples**
-
-### **Option 1: DockerHub (Traditional)**
-```json
-{
-  "GWASPipeline.docker_image": "mamana/gwas-tools:latest"
-}
+### Run with DockerHub
+```bash
+./scripts/run_pipeline.sh inputs/test_gensetB.json
 ```
 
-### **Option 2: GitHub Container Registry (Recommended)**
+### Run with GitHub Container Registry
+```bash
+./scripts/run_pipeline.sh inputs/test_gensetB_ghcr.json
+```
+
+### Override Registry in Any Input
 ```json
 {
   "GWASPipeline.docker_image": "ghcr.io/mamana/gwas-tools:latest"
 }
 ```
 
-### **WDL Task Configuration**
-```wdl
-task QualityControl {
-    runtime {
-        # Option 1: DockerHub
-        docker: "mamana/gwas-tools:latest"
-        
-        # Option 2: GitHub Container Registry
-        docker: "ghcr.io/mamana/gwas-tools:latest"
-        
-        cpu: 4
-        memory: "16GB"
-    }
-}
-```
-
-## 🌍 **Platform Support**
-
-### **Cloud Platforms Supporting GHCR**
-- ✅ **Terra/AnVIL**: Full support
-- ✅ **DNAstack Workbench**: Full support  
-- ✅ **Nextflow Tower**: Full support
-- ✅ **AWS Batch**: Full support
-- ✅ **Google Cloud Life Sciences**: Full support
-- ✅ **Azure Container Instances**: Full support
-
-### **Local Execution**
+### Test Both Registries
 ```bash
-# Works with both registries
-java -jar cromwell.jar run workflows/gwas_pipeline.wdl -i inputs/test_gensetB.json
-java -jar cromwell.jar run workflows/gwas_pipeline.wdl -i inputs/test_gensetB_ghcr.json
-```
-
-## 🚀 **Quick Start**
-
-### **Test DockerHub Version**
-```bash
+# Test DockerHub
 ./scripts/test_gensetB.sh
-```
 
-### **Test GitHub Container Registry Version**
-```bash
+# Test GHCR
 ./scripts/test_ghcr.sh
 ```
 
-### **Compare Both Registries**
-```bash
-# Run with DockerHub
-./scripts/run_pipeline.sh inputs/test_gensetB.json
+## **Platform Support**
 
-# Run with GitHub Container Registry  
-./scripts/run_pipeline.sh inputs/test_gensetB_ghcr.json
+Both registries work seamlessly with:
+- **Terra/AnVIL**: Full support
+- **DNAstack Workbench**: Full support
+- **Nextflow Tower**: Full support
+- **AWS Batch**: Full support
+- **Google Cloud Life Sciences**: Full support
+- **Azure Container Instances**: Full support
+
+### Platform-Specific Configuration
+
+#### Terra/AnVIL
+```json
+{
+  "GWASPipeline.docker_image": "ghcr.io/mamana/gwas-tools:latest"
+}
 ```
 
-## 🔐 **Authentication**
+#### DNAstack
+No special configuration needed - works with standard WDL runtime blocks.
 
-### **DockerHub**
+## **Quick Start**
+
+### 1. Clone Repository
 ```bash
-# Requires separate DockerHub account and token
-docker login
-docker pull mamana/gwas-tools:latest
+git clone https://github.com/mamanambiya/federated-gwas-workshop-2025.git
+cd federated-gwas-workshop-2025
 ```
 
-### **GitHub Container Registry**
+### 2. Test GitHub Container Registry
 ```bash
-# Uses your GitHub credentials (if public image, no auth needed)
-echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
+# Pull the image
 docker pull ghcr.io/mamana/gwas-tools:latest
+
+# Run the test
+./scripts/test_ghcr.sh
 ```
 
-## 📊 **Automatic Publishing**
-
-When you push to your GitHub repository:
-
-1. **GitHub Actions triggers**
-2. **Builds Docker image once**
-3. **Publishes to both registries simultaneously:**
-   - `mamana/gwas-tools:latest` (DockerHub)
-   - `ghcr.io/mamana/gwas-tools:latest` (GitHub Container Registry)
-4. **Updates descriptions** on both platforms
-5. **Runs security scans** on both images
-
-## 🎯 **Benefits of GitHub Container Registry for GWAS**
-
-### **Research-Friendly Features**
-- 🔬 **Open Science**: Better support for public research containers
-- 🌍 **Global Access**: CDN for faster pulls worldwide
-- 🔒 **Security**: Built-in vulnerability scanning
-- 📊 **Compliance**: Audit trails and access controls
-
-### **Integration Benefits**
-- 🔗 **Same Repository**: Container images live with source code
-- 🎛️ **Unified Management**: Packages tab in GitHub repository
-- 🚀 **CI/CD Integration**: Native GitHub Actions support
-- 🔑 **Authentication**: Uses existing GitHub credentials
-
-### **Development Benefits**
-- 💰 **Cost**: Free private repositories
-- 📈 **Performance**: Better bandwidth limits
-- 🔄 **Versioning**: Integrated with Git tags and releases
-- 🛡️ **Security**: Repository-level permissions
-
-## 🏃‍♂️ **Migration Guide**
-
-### **From DockerHub to GHCR**
+### 3. Run Full Pipeline
 ```bash
-# Update WDL files
-find . -name "*.wdl" -exec sed -i 's|mamana/gwas-tools|ghcr.io/mamana/gwas-tools|g' {} +
+# With test data
+./scripts/run_pipeline.sh inputs/test_gensetB_ghcr.json
 
-# Update input files
-find . -name "*.json" -exec sed -i 's|"mamana/gwas-tools|"ghcr.io/mamana/gwas-tools|g' {} +
+# With your data
+# Edit inputs/test_gensetB_ghcr.json with your file paths
+./scripts/run_pipeline.sh inputs/your_data_ghcr.json
 ```
 
-### **Hybrid Approach (Both Registries)**
-- Use **DockerHub** for maximum compatibility
-- Use **GHCR** for GitHub-integrated projects
-- **Same workflow**, just different `docker:` specification
+### 4. Verify Results
+```bash
+# Check outputs
+ls -la outputs/
+```
 
-## 📈 **Best Practices**
+## **Automatic Publishing**
 
-### **Registry Selection**
-- 🎯 **Use GHCR** for GitHub-hosted research projects
-- 🐳 **Use DockerHub** for maximum ecosystem compatibility
-- 🔄 **Use both** for redundancy and broader access
+GitHub Actions automatically:
+1. **Builds** multi-architecture images on push
+2. **Tags** with version, latest, and commit SHA
+3. **Pushes** to both registries simultaneously
+4. **Scans** for vulnerabilities
+5. **Updates** registry descriptions
 
-### **Image Management**
-- 🏷️ **Tag versions** for reproducibility (`v1.0.0`)
-- 📅 **Keep latest** updated for development
-- 🧹 **Clean up old images** automatically
-- 🔒 **Make research images public** for open science
+## **Benefits of GitHub Container Registry for GWAS**
 
-## 🎉 **Ready to Use!**
+### Research Collaboration
+- **Open Science**: Better support for public research containers
+- **Global Access**: CDN for faster pulls worldwide
+- **Version Control**: Tied to Git commits and releases
+- **Compliance**: Audit trails and access controls
 
-Your GWAS pipeline now has **dual-registry support**:
+### Technical Advantages
+- **Integration**: Native GitHub Actions support
+- **Unified Management**: Packages tab in GitHub repository
+- **CI/CD Integration**: Native GitHub Actions support
+- **Security**: Built-in vulnerability scanning
+- **Cost**: Free for public repositories
 
-1. **Choose your preferred registry** (DockerHub or GHCR)
-2. **Update input JSON** with appropriate image name
-3. **Run workflow** - everything else stays the same!
+### Performance
+- **Performance**: Better bandwidth limits
+- **Versioning**: Integrated with Git tags and releases
+- **Security**: Repository-level permissions
 
-The same WDL workflow works with both registries, giving you flexibility in deployment and distribution for federated genomics research! 🧬 
+## **Migration Guide**
+
+### From DockerHub to GHCR
+1. Update `docker_image` in input JSON files
+2. No changes to WDL files needed
+3. Authentication handled automatically in GitHub Actions
+
+### Using Both Registries
+```json
+// DockerHub
+"docker_image": "mamana/gwas-tools:latest"
+
+// GitHub Container Registry
+"docker_image": "ghcr.io/mamana/gwas-tools:latest"
+```
+
+## **Best Practices**
+
+### Registry Selection
+- **Use GHCR** for GitHub-hosted research projects
+- **Use DockerHub** for maximum ecosystem compatibility
+- **Use both** for redundancy and broader access
+
+### Version Management
+- **Tag versions** for reproducibility (`v1.0.0`)
+- Keep `latest` for development
+- Use commit SHAs for debugging
+
+## **Security Considerations**
+
+- Public images require no authentication
+- Private images use GitHub tokens
+- Vulnerability scanning included
+- SBOM generation available
+
+## **Ready to Use!**
+
+The pipeline now supports both registries with:
+- Automated builds and publishing
+- Complete test coverage
+- Platform compatibility
+- Security scanning
+- Documentation
+
+Start using GitHub Container Registry with your WDL workflows today for better integration, performance, and collaboration in federated genomics research! 

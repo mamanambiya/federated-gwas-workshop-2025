@@ -1,14 +1,14 @@
-# 🚀 Repository Setup Instructions
+# Repository Setup Instructions
 
-## ✅ Local Repository Status
-- ✅ Git initialized with correct author info
-- ✅ Author: **Mamana Mbiyavanga** (mamanambiya)
-- ✅ Email: **mamana.mbiyavanga@uct.ac.za**
-- ✅ All files added and committed (34 files, 1.16M+ lines)
-- ✅ Commit hash: `89d5464`
-- ✅ Ready to push to GitHub
+## Local Repository Status
+- Git initialized with correct author info
+- Author: **Mamana Mbiyavanga** (mamanambiya)
+- Email: **mamana.mbiyavanga@uct.ac.za**
+- All files added and committed (34 files, 1.16M+ lines)
+- Commit hash: `89d5464`
+- Ready to push to GitHub
 
-## 📋 Step-by-Step GitHub Setup
+## Step-by-Step GitHub Setup
 
 ### Step 1: Create GitHub Repository
 
@@ -17,8 +17,8 @@
 3. **Repository Details**:
    - **Name**: `federated-gwas-workshop-2025`
    - **Description**: `Federated GWAS analysis pipeline for GA4GH Hackathon 2025`
-   - **Visibility**: ✅ **Public** (for open science)
-   - **Initialize**: ❌ **Do NOT** check any boxes (no README, .gitignore, license)
+   - **Visibility**: **Public** (for open science)
+- **Initialize**: **Do NOT** check any boxes (no README, .gitignore, license)
 4. **Click "Create repository"**
 
 ### Step 2: Push Local Code to GitHub
@@ -38,12 +38,12 @@ git push -u origin main
 Visit your new repository: https://github.com/mamanambiya/federated-gwas-workshop-2025
 
 You should see:
-- ✅ All 34 files uploaded
-- ✅ README.md displaying the project overview
-- ✅ GitHub Actions workflows ready to run
-- ✅ Complete directory structure
+- All 34 files uploaded
+- README.md displaying the project overview
+- GitHub Actions workflows ready to run
+- Complete directory structure
 
-## 🔧 Post-Upload Configuration
+## Post-Upload Configuration
 
 ### Enable GitHub Actions
 1. Go to the **"Actions"** tab in your repository
@@ -61,7 +61,7 @@ You should see:
 2. Scroll to **"Danger Zone"**
 3. Click **"Change visibility"** > **"Make public"**
 
-## 📊 Repository Contents Overview
+## Repository Contents Overview
 
 ```
 federated-gwas-workshop-2025/
@@ -99,7 +99,7 @@ federated-gwas-workshop-2025/
 └── README.md                   # Project overview
 ```
 
-## 🎯 Next Steps After Upload
+## Next Steps After Upload
 
 1. **Test GitHub Actions**: Push a small change to trigger workflows
 2. **Configure Docker Secrets**: Add DockerHub credentials for publishing (optional)
@@ -107,17 +107,17 @@ federated-gwas-workshop-2025/
 4. **Documentation**: Add any additional documentation needs
 5. **Issues/Projects**: Set up GitHub Issues for collaboration
 
-## 🌟 Repository Features
+## Repository Features
 
-- ✅ **Complete WDL Pipeline**: Ready-to-run GWAS analysis
-- ✅ **Multi-Registry Support**: DockerHub + GitHub Container Registry
-- ✅ **Automated CI/CD**: GitHub Actions for builds and security
-- ✅ **Test Data Included**: gensetB dataset for immediate testing
-- ✅ **Comprehensive Docs**: Usage guides and setup instructions
-- ✅ **Security Scanning**: Vulnerability detection and compliance
-- ✅ **Open Science Ready**: Public repository for collaboration
+- **Complete WDL Pipeline**: Ready-to-run GWAS analysis
+- **Multi-Registry Support**: DockerHub + GitHub Container Registry
+- **Automated CI/CD**: GitHub Actions for builds and security
+- **Test Data Included**: gensetB dataset for immediate testing
+- **Comprehensive Docs**: Usage guides and setup instructions
+- **Security Scanning**: Vulnerability detection and compliance
+- **Open Science Ready**: Public repository for collaboration
 
-## 👤 Author Information
+## Author Information
 
 - **Name**: Mamana Mbiyavanga
 - **GitHub**: [@mamanambiya](https://github.com/mamanambiya)
@@ -125,4 +125,4 @@ federated-gwas-workshop-2025/
 - **Institution**: University of Cape Town
 - **Project**: GA4GH Hackathon 2025 - African Genomics Team
 
-Your federated GWAS workshop repository is ready for the GA4GH Hackathon 2025! 🧬 
+Your federated GWAS workshop repository is ready for the GA4GH Hackathon 2025! 

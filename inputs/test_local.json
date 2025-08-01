@@ -1,7 +1,7 @@
 {
-  "GWASPipeline.genotype_file": "/path/to/test/genotypes.bed",
-  "GWASPipeline.phenotype_file": "/path/to/test/phenotypes.txt",
-  "GWASPipeline.covariate_file": "/path/to/test/covariates.txt",
+  "GWASPipeline.genotype_file": "data/genotypes.bed",
+  "GWASPipeline.phenotype_file": "data/phenotypes.txt",
+  "GWASPipeline.covariate_file": "data/covariates.txt",
   "GWASPipeline.trait_name": "BMI",
   "GWASPipeline.trait_type": "quantitative",
   "GWASPipeline.output_prefix": "test_gwas_analysis",

@@ -82,12 +82,12 @@ These directories will be created automatically during workflow execution:
 
 ## Features
 
-- 🧬 **Comprehensive GWAS pipeline** from QC to visualization
-- 🐳 **Containerized execution** for reproducibility
-- 📊 **Professional visualizations** (Manhattan, QQ plots)
-- 🔗 **Federated analysis ready** with standardized outputs
-- 🔍 **Input validation** and error checking
-- 📚 **Extensive documentation** and examples
-- 🌍 **African genomics optimized** for diverse populations
+- **Comprehensive GWAS pipeline** from QC to visualization
+- **Containerized execution** for reproducibility
+- **Professional visualizations** (Manhattan, QQ plots)
+- **Federated analysis ready** with standardized outputs
+- **Input validation** and error checking
+- **Extensive documentation** and examples
+- **African genomics optimized** for diverse populations
 
 This structure enables easy deployment across different computing environments while maintaining consistency with established WDL workflow patterns. 

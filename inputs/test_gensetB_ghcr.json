@@ -1,7 +1,7 @@
 {
-  "GWASPipeline.genotype_file": "/Users/mamana/projects-uct/afrigen-d/ga4gh_hackathon_2025/federated-gwas-workshop-2025/tests/data/gensetB.bed",
-  "GWASPipeline.phenotype_file": "/Users/mamana/projects-uct/afrigen-d/ga4gh_hackathon_2025/federated-gwas-workshop-2025/tests/data/gensetB_phenotypes.txt",
-  "GWASPipeline.covariate_file": "/Users/mamana/projects-uct/afrigen-d/ga4gh_hackathon_2025/federated-gwas-workshop-2025/tests/data/gensetB_covariates.txt",
+  "GWASPipeline.genotype_file": "tests/data/gensetB.bed",
+  "GWASPipeline.phenotype_file": "tests/data/gensetB_phenotypes.txt",
+  "GWASPipeline.covariate_file": "tests/data/gensetB_covariates.txt",
   "GWASPipeline.trait_name": "quantitative_trait",
   "GWASPipeline.trait_type": "quantitative",
   "GWASPipeline.output_prefix": "gensetB_gwas_results_ghcr",

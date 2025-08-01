@@ -1,10 +1,10 @@
 # Docker CI/CD Setup Summary
 
-## 🚀 Automated Docker Build Pipeline
+## Automated Docker Build Pipeline
 
 Your GWAS tools Docker image now has a complete CI/CD pipeline that automatically builds and publishes to DockerHub.
 
-## 📁 Created Files
+## Created Files
 
 ### GitHub Actions Workflows
 - **`.github/workflows/docker-build.yml`** - Main build and publish workflow
@@ -19,29 +19,29 @@ Your GWAS tools Docker image now has a complete CI/CD pipeline that automaticall
 - **`scripts/test_docker_build.sh`** - Local build and test script
 - **`docs/DOCKER_CI_SETUP.md`** - Complete setup instructions
 
-## 🔧 Features Implemented
+## Features Implemented
 
 ### Build Pipeline
-- ✅ **Multi-architecture builds** (AMD64, ARM64)
-- ✅ **Automatic tagging** (latest, versions, commit SHAs)
-- ✅ **Build caching** for faster builds
-- ✅ **DockerHub integration** with automated pushes
-- ✅ **Description updates** on DockerHub
+- **Multi-architecture builds** (AMD64, ARM64)
+- **Automatic tagging** (latest, versions, commit SHAs)
+- **Build caching** for faster builds
+- **DockerHub integration** with automated pushes
+- **Description updates** on DockerHub
 
 ### Security & Compliance
-- ✅ **Dockerfile linting** with Hadolint
-- ✅ **Vulnerability scanning** with Trivy and Grype
-- ✅ **SBOM generation** for supply chain security
-- ✅ **Compliance checks** (non-root user, health checks, metadata)
-- ✅ **Non-root container execution**
+- **Dockerfile linting** with Hadolint
+- **Vulnerability scanning** with Trivy and Grype
+- **SBOM generation** for supply chain security
+- **Compliance checks** (non-root user, health checks, metadata)
+- **Non-root container execution**
 
 ### Optimization
-- ✅ **Layer caching** with GitHub Actions cache
-- ✅ **Optimized build context** with .dockerignore
-- ✅ **Pinned dependencies** for reproducibility
-- ✅ **Health checks** for container monitoring
+- **Layer caching** with GitHub Actions cache
+- **Optimized build context** with .dockerignore
+- **Pinned dependencies** for reproducibility
+- **Health checks** for container monitoring
 
-## 🏃‍♂️ Quick Start
+## Quick Start
 
 ### 1. Set Up DockerHub Secrets
 ```bash
@@ -68,7 +68,7 @@ git push origin main
 - Watch "Build and Push Docker Image" workflow
 - Verify image appears on DockerHub
 
-## 🏷️ Image Tags
+## Image Tags
 
 The pipeline automatically creates tags:
 
@@ -78,21 +78,7 @@ The pipeline automatically creates tags:
 | Release v1.0.0 | `v1.0.0`, `1.0`, `latest` | `mamana/gwas-tools:v1.0.0` |
 | Pull request | `pr-123` | `mamana/gwas-tools:pr-123` |
 
-## 🔒 Security Features
-
-### Container Security
-- **Non-root user**: Container runs as UID 1001
-- **Health checks**: Automated container health monitoring
-- **Minimal attack surface**: Only essential tools included
-- **Updated base image**: Ubuntu 20.04 LTS with security updates
-
-### CI/CD Security
-- **Secret management**: Encrypted GitHub secrets
-- **Vulnerability scanning**: Automated security scans
-- **SBOM generation**: Software bill of materials
-- **Compliance checks**: Automated policy enforcement
-
-## 📊 Usage Statistics
+## Usage Statistics
 
 Once published, you can track:
 - **Docker pulls**: Via DockerHub analytics
@@ -100,7 +86,7 @@ Once published, you can track:
 - **Security scan results**: Via GitHub Security tab
 - **Image size trends**: Via Docker layer analysis
 
-## 🔄 Workflow Triggers
+## Workflow Triggers
 
 ### Automatic
 - **Push to main/master**: When Dockerfile changes
@@ -112,7 +98,7 @@ Once published, you can track:
 - **workflow_dispatch**: Manual trigger from Actions tab
 - **Local builds**: Using test script
 
-## 📈 Monitoring
+## Monitoring
 
 ### GitHub Actions
 - Build status and logs
@@ -129,20 +115,20 @@ Once published, you can track:
 - Compliance dashboards
 - Dependency tracking
 
-## 🌍 Multi-Platform Support
+## Multi-Platform Support
 
 Built for multiple architectures:
 - **linux/amd64**: Intel/AMD processors
 - **linux/arm64**: ARM processors (Apple Silicon, AWS Graviton)
 
-## 📚 Documentation
+## Documentation
 
 Complete documentation available:
 - **Setup Guide**: `docs/DOCKER_CI_SETUP.md`
 - **DockerHub README**: `docker/README.md`
 - **Local Testing**: `scripts/test_docker_build.sh`
 
-## ✅ Next Steps
+## Next Steps
 
 1. **Configure GitHub secrets** for DockerHub
 2. **Push changes** to trigger first build
@@ -150,4 +136,4 @@ Complete documentation available:
 4. **Verify image** on DockerHub
 5. **Test pulling image**: `docker pull mamana/gwas-tools:latest`
 
-Your GWAS tools container is now production-ready with automated builds, security scanning, and multi-platform support! 
+Your Docker image is now ready for automated builds and distribution! 

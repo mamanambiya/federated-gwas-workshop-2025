@@ -118,16 +118,16 @@ System requirements for optimal performance:
    - Monitor progress in cromwell logs
 
 3. **File Path Issues**
-   - Ensure absolute paths in `inputs/test_gensetB.json`
+   - Ensure correct relative paths in `inputs/test_gensetB.json`
    - Check file permissions
 
 ### Validation Checks
 
 The pipeline includes comprehensive validation:
-- ✅ File existence and format validation
-- ✅ Sample ID consistency across files
-- ✅ Phenotype/covariate data integrity
-- ✅ PLINK binary file validity
+- File existence and format validation
+- Sample ID consistency across files
+- Phenotype/covariate data integrity
+- PLINK binary file validity
 
 ## Dataset Notes
 

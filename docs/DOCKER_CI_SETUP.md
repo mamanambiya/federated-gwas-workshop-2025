@@ -5,12 +5,12 @@ This guide explains how to set up automated Docker image builds and publishing t
 ## Overview
 
 The CI/CD pipeline automatically:
-- ✅ Builds Docker images on every push to main/master
-- ✅ Supports multi-architecture builds (AMD64, ARM64)
-- ✅ Pushes images to DockerHub with proper tagging
-- ✅ Updates DockerHub description automatically
-- ✅ Caches layers for faster builds
-- ✅ Triggers on Dockerfile changes, releases, and manual dispatch
+- Builds Docker images on every push to main/master
+- Supports multi-architecture builds (AMD64, ARM64)
+- Pushes images to DockerHub with proper tagging
+- Updates DockerHub description automatically
+- Caches layers for faster builds
+- Triggers on Dockerfile changes, releases, and manual dispatch
 
 ## Prerequisites
 
@@ -173,21 +173,21 @@ Access detailed build logs:
 ## Security Considerations
 
 ### Token Management
-- ✅ Use access tokens instead of passwords
-- ✅ Limit token permissions to minimum required
-- ✅ Regularly rotate access tokens
-- ✅ Never expose tokens in logs or code
+- Use access tokens instead of passwords
+- Limit token permissions to minimum required
+- Regularly rotate access tokens
+- Never expose tokens in logs or code
 
 ### Image Security
-- ✅ Base image is regularly updated Ubuntu LTS
-- ✅ Dependencies are pinned to specific versions
-- ✅ No sensitive data in image layers
-- ✅ Multi-architecture support reduces attack surface
+- Base image is regularly updated Ubuntu LTS
+- Dependencies are pinned to specific versions
+- No sensitive data in image layers
+- Multi-architecture support reduces attack surface
 
 ### Repository Access
-- ✅ Secrets are encrypted at rest
-- ✅ Workflow runs in isolated environment
-- ✅ No access to secrets in pull request workflows
+- Secrets are encrypted at rest
+- Workflow runs in isolated environment
+- No access to secrets in pull request workflows
 
 ## Advanced Configuration
 

@@ -4,7 +4,7 @@
 
 **Yes, WDL can absolutely use GitHub Container Registry (ghcr.io)!** In fact, GitHub Container Registry offers several advantages over traditional registries and is increasingly popular for research workflows.
 
-## 🎯 Benefits of GitHub Container Registry
+## Benefits of GitHub Container Registry
 
 ### Integration Benefits
 - **Seamless GitHub Integration**: Tightly coupled with your source code repository
@@ -23,19 +23,19 @@
 - **OIDC Integration**: Support for GitHub's OIDC tokens
 - **Audit Logging**: Complete audit trail in GitHub
 
-## 🐳 Registry Comparison
+## Registry Comparison
 
 | Feature | DockerHub | GitHub Container Registry |
 |---------|-----------|---------------------------|
-| **Free Public Repos** | ✅ Unlimited | ✅ Unlimited |
-| **Free Private Repos** | 1 repository | ✅ Unlimited |
+| **Free Public Repos** | Unlimited | Unlimited |
+| **Free Private Repos** | 1 repository | Unlimited |
 | **Bandwidth** | Limited | Generous |
-| **Build Integration** | Separate setup | ✅ Native GitHub Actions |
-| **Authentication** | Separate tokens | ✅ GitHub tokens |
-| **Vulnerability Scanning** | Paid feature | ✅ Built-in |
-| **Package Permissions** | Registry-level | ✅ Repository-level |
+| **Build Integration** | Separate setup | Native GitHub Actions |
+| **Authentication** | Separate tokens | GitHub tokens |
+| **Vulnerability Scanning** | Paid feature | Built-in |
+| **Package Permissions** | Registry-level | Repository-level |
 
-## 🔧 Configuration
+## Configuration
 
 ### 1. WDL Workflow Configuration
 
@@ -85,7 +85,7 @@ backend {
 }
 ```
 
-## 🏷️ Image Naming Conventions
+## Image Naming Conventions
 
 ### GitHub Container Registry Format
 ```
@@ -105,7 +105,7 @@ ghcr.io/mamana/gwas-tools:v1.0.0
 ghcr.io/mamana/gwas-tools:main-abc123
 ```
 
-## 🔐 Authentication
+## Authentication
 
 ### For GitHub Actions (Automatic)
 ```yaml
@@ -149,7 +149,7 @@ export GITHUB_USERNAME="mamana"
 # Cromwell can use these for authentication
 ```
 
-## 🚀 Usage Examples
+## Usage Examples
 
 ### Basic WDL Task
 ```wdl
@@ -202,7 +202,7 @@ runtime:
   memory: 16Gi
 ```
 
-## 🔄 Migration from DockerHub
+## Migration from DockerHub
 
 ### 1. Update WDL Files
 ```bash
@@ -222,29 +222,30 @@ find . -name "*.json" -exec sed -i 's|"mamana/gwas-tools|"ghcr.io/mamana/gwas-to
 find . -name "*.md" -exec sed -i 's|mamana/gwas-tools|ghcr.io/mamana/gwas-tools|g' {} +
 ```
 
-## 📊 Registry Availability
+## Registry Availability
 
 ### Public Access
-- ✅ **No authentication required** for public images
-- ✅ **Unlimited bandwidth** for open source projects
-- ✅ **Global CDN** for fast downloads
+- **No authentication required** for public images
+- **Unlimited bandwidth** for open source projects
+- **Global CDN** for fast downloads
 
 ### Private Access
-- 🔐 **GitHub token required** for private images
-- 🔐 **Repository permissions** control access
-- 🔐 **Fine-grained access control** available
+- **GitHub token required** for private images
+- **Repository permissions** control access
+- **Fine-grained access control** available
 
-## 🌍 Platform Support
+## Platform Support
 
 ### Cloud Platforms
-| Platform | GitHub Container Registry Support |
-|----------|----------------------------------|
-| **Terra/AnVIL** | ✅ Full support |
-| **DNAstack** | ✅ Full support |
-| **Nextflow Tower** | ✅ Full support |
-| **AWS Batch** | ✅ Full support |
-| **Google Cloud Life Sciences** | ✅ Full support |
-| **Azure Container Instances** | ✅ Full support |
+| Platform | GHCR Support |
+|----------|--------------|
+| **Cromwell** | Full support |
+| **Terra/AnVIL** | Full support |
+| **DNAstack** | Full support |
+| **Nextflow Tower** | Full support |
+| **AWS Batch** | Full support |
+| **Google Cloud Life Sciences** | Full support |
+| **Azure Container Instances** | Full support |
 
 ### Local Execution
 ```bash
@@ -255,7 +256,7 @@ java -jar cromwell.jar run workflows/gwas_pipeline.wdl -i inputs/test_gensetB_gh
 docker run --rm -v $(pwd)/data:/data ghcr.io/mamana/gwas-tools:latest plink2 --help
 ```
 
-## 🎛️ Advanced Configuration
+## Advanced Configuration
 
 ### Version Pinning
 ```wdl
@@ -284,7 +285,7 @@ docker {
 }
 ```
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -321,27 +322,27 @@ curl -H "Authorization: Bearer $GITHUB_TOKEN" \
      https://ghcr.io/v2/mamana/gwas-tools/tags/list
 ```
 
-## 📈 Best Practices
+## Best Practices
 
-### Image Management
-- ✅ **Use specific version tags** for production workflows
-- ✅ **Keep latest tag updated** for development
-- ✅ **Set up automated cleanup** for old images
-- ✅ **Use multi-architecture builds** for compatibility
+### Versioning
+- **Use specific version tags** for production workflows
+- **Keep latest tag updated** for development
+- **Set up automated cleanup** for old images
+- **Use multi-architecture builds** for compatibility
 
 ### Security
-- ✅ **Use minimal base images** to reduce attack surface
-- ✅ **Scan for vulnerabilities** regularly
-- ✅ **Pin dependency versions** for reproducibility
-- ✅ **Use non-root users** in containers
+- **Use minimal base images** to reduce attack surface
+- **Scan for vulnerabilities** regularly
+- **Pin dependency versions** for reproducibility
+- **Use non-root users** in containers
 
 ### Performance
-- ✅ **Layer caching** for faster builds
-- ✅ **Multi-stage builds** for smaller images
-- ✅ **Regional mirrors** for global distribution
-- ✅ **Parallel pulls** when possible
+- **Layer caching** for faster builds
+- **Multi-stage builds** for smaller images
+- **Regional mirrors** for global distribution
+- **Parallel pulls** when possible
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [GitHub Container Registry Documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 - [WDL Specification](https://github.com/openwdl/wdl)
