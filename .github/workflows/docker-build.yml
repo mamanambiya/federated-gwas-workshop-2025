@@ -1,0 +1,115 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'docker/Dockerfile'
+      - '.github/workflows/docker-build.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'docker/Dockerfile'
+  release:
+    types: [published]
+  workflow_dispatch:
+
+env:
+  # Multi-registry configuration
+  DOCKERHUB_IMAGE: mamana/gwas-tools
+  GHCR_IMAGE: ghcr.io/${{ github.repository_owner }}/gwas-tools
+  DOCKER_PLATFORMS: linux/amd64,linux/arm64
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Log in to DockerHub
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+    - name: Log in to GitHub Container Registry
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: |
+          ${{ env.DOCKERHUB_IMAGE }}
+          ${{ env.GHCR_IMAGE }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=raw,value=latest,enable={{is_default_branch}}
+          type=sha,prefix={{branch}}-
+        labels: |
+          org.opencontainers.image.title=GWAS Tools Container
+          org.opencontainers.image.description=Federated genome-wide association studies (GWAS) analysis tools
+          org.opencontainers.image.vendor=elwazi.org
+          org.opencontainers.image.licenses=MIT
+          
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/Dockerfile
+        platforms: ${{ env.DOCKER_PLATFORMS }}
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          BUILD_DATE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+          VCS_REF=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+        
+    - name: Update Docker Hub description
+      if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+      uses: peter-evans/dockerhub-description@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        repository: ${{ env.DOCKERHUB_IMAGE }}
+        readme-filepath: ./docker/README.md
+        
+    - name: Generate build summary
+      if: github.event_name != 'pull_request'
+      run: |
+        echo "## 🐳 Docker Build Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Images Published" >> $GITHUB_STEP_SUMMARY
+        echo "| Registry | Image | Tags |" >> $GITHUB_STEP_SUMMARY
+        echo "|----------|-------|------|" >> $GITHUB_STEP_SUMMARY
+        echo "| DockerHub | \`${{ env.DOCKERHUB_IMAGE }}\` | \`latest\` |" >> $GITHUB_STEP_SUMMARY
+        echo "| GitHub Container Registry | \`${{ env.GHCR_IMAGE }}\` | \`latest\` |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Pull Commands" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+        echo "# DockerHub" >> $GITHUB_STEP_SUMMARY
+        echo "docker pull ${{ env.DOCKERHUB_IMAGE }}:latest" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "# GitHub Container Registry" >> $GITHUB_STEP_SUMMARY
+        echo "docker pull ${{ env.GHCR_IMAGE }}:latest" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY 

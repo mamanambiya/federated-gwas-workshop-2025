@@ -1,166 +1,280 @@
-# 🧬 Federated Imputation - GA4GH Hackathon 2025
+# Federated GWAS Workshop 2025
 
-Complete documentation and implementation guides for federated genomic imputation across African research institutions.
+🧬 **A comprehensive WDL-based pipeline for federated genome-wide association studies (GWAS)**
 
-## 📁 Project Structure
+Developed for the **GA4GH Hackathon 2025** by the **African Genomics Team** at the University of Cape Town.
 
-```
-ga4gh_hackathon_2025/
-├── 📄 README.md                                    # This file - project overview
-├── 📄 agenda.md                                    # Original hackathon agenda
-├── 📄 federated_imputation_implementation.md       # High-level overview & architecture
-├── 📄 federated_imputation_complete_guide.md       # Comprehensive implementation guide
-│
-├── 📂 docs/
-│   ├── 📂 classic/
-│   │   ├── 📄 federated_imputation_classic.md      # Traditional federated learning approach
-│   │   └── 🌐 federated_imputation_classic.html    # ✨ NEW - Beautiful HTML version
-│   │
-│   ├── 📂 ml/
-│   │   ├── 📄 federated_imputation_ml.md           # ML-focused implementation with code
-│   │   └── 🌐 federated_imputation_ml.html         # ✨ NEW - Beautiful HTML version
-│   │
-│   └── 📂 diagrams/
-│       ├── 📄 federated_imputation_diagrams.md     # Mermaid diagram source code
-│       ├── 📄 README_DIAGRAMS.md                   # Instructions for viewing diagrams
-│       ├── 🌐 federated_imputation_simple.html     # ⭐ RECOMMENDED - Interactive diagrams
-│       ├── 🌐 federated_imputation_beautiful.html  # Advanced styling version
-│       ├── 🌐 federated_imputation_working.html    # Complex JS version
-│       └── 🌐 federated_imputation_diagrams.html   # Basic version
-│
-└── 📂 scripts/
-    ├── 🐍 generate_simple_html.py                  # ⭐ RECOMMENDED - Simple HTML generator
-    ├── 🐍 generate_markdown_html.py                # ✨ NEW - General markdown to HTML
-    ├── 🐍 generate_beautiful_html.py               # Advanced HTML generator
-    ├── 🐍 generate_working_html.py                 # Complex HTML generator
-    └── 🐍 generate_html.py                         # Basic HTML generator
-```
+## 🎯 Overview
+
+This repository contains a complete, production-ready GWAS analysis pipeline designed for federated genomic research. The pipeline is built using the **Workflow Description Language (WDL)** and includes containerized tools, automated testing, and comprehensive documentation.
+
+### ✨ Key Features
+
+- 🔬 **Complete GWAS Pipeline**: Quality control, population stratification, association testing, and results processing
+- 🐳 **Containerized**: Docker containers with PLINK, R, Python, and all dependencies
+- 🔄 **Multi-Registry Support**: Compatible with both DockerHub and GitHub Container Registry
+- 🤖 **Automated CI/CD**: GitHub Actions for building, testing, and security scanning
+- 🧪 **Ready-to-Use Test Data**: Includes gensetB dataset for immediate testing
+- 📊 **Rich Visualizations**: Manhattan plots, QQ plots, PCA plots, and QC reports
+- 🌍 **Federated Ready**: Designed for distributed genomic analysis
+- 📚 **Comprehensive Documentation**: Detailed usage guides and setup instructions
 
 ## 🚀 Quick Start
 
-### 1. **View Interactive Diagrams** (Recommended)
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) (20.10+)
+- [Cromwell](https://github.com/broadinstitute/cromwell) (85+) or [miniwdl](https://github.com/chanzuckerberg/miniwdl)
+- 8GB+ RAM and 4+ CPU cores recommended
+
+### Option 1: Quick Test with Provided Data
+
 ```bash
-open docs/diagrams/federated_imputation_simple.html
+# Clone the repository
+git clone https://github.com/mamanambiya/federated-gwas-workshop-2025.git
+cd federated-gwas-workshop-2025
+
+# Run with test data (gensetB dataset)
+./scripts/test_gensetB.sh
 ```
 
-### 2. **Read Documentation**
-- **📖 Overview:** `federated_imputation_implementation.md`
-- **🎯 Classic Approach:** 
-  - **📄 Markdown:** `docs/classic/federated_imputation_classic.md`
-  - **🌐 HTML:** `docs/classic/federated_imputation_classic.html` ⭐
-- **🤖 ML Implementation:** 
-  - **📄 Markdown:** `docs/ml/federated_imputation_ml.md`
-  - **🌐 HTML:** `docs/ml/federated_imputation_ml.html` ⭐
-- **📚 Complete Guide:** `federated_imputation_complete_guide.md`
+### Option 2: Docker Registry Options
 
-### 3. **Generate New HTML** (if needed)
 ```bash
-# For diagrams
-cd scripts/
-python3 generate_simple_html.py
+# Using DockerHub (default)
+./scripts/run_pipeline.sh inputs/test_gensetB.json
 
-# For any markdown file
-python3 generate_markdown_html.py ../docs/classic/federated_imputation_classic.md
-python3 generate_markdown_html.py ../docs/ml/federated_imputation_ml.md
+# Using GitHub Container Registry
+./scripts/run_pipeline.sh inputs/test_gensetB_ghcr.json
 ```
 
-## 📊 Documentation Types
+### Option 3: Manual Execution
 
-| Document | Markdown | HTML | Purpose | Audience |
-|----------|----------|------|---------|----------|
-| **Implementation Overview** | ✅ | - | High-level architecture & requirements | All stakeholders |
-| **Classic Approach** | ✅ | ✅ ⭐ | Traditional federated learning methods | Researchers, architects |
-| **ML Implementation** | ✅ | ✅ ⭐ | Detailed code & neural network setup | Developers, data scientists |
-| **Complete Guide** | ✅ | - | Comprehensive end-to-end documentation | Technical implementers |
-| **Interactive Diagrams** | ✅ | ✅ ⭐ | Visual system architecture & workflows | All audiences |
+```bash
+# Download Cromwell (if not already installed)
+wget -O cromwell.jar https://github.com/broadinstitute/cromwell/releases/download/85/cromwell-85.jar
 
-## 🎯 Key Features
+# Run the workflow
+java -jar cromwell.jar run workflows/gwas_pipeline.wdl -i inputs/test_gensetB.json
+```
 
-### **📐 System Architecture**
-- **3 Research Nodes:** Wits (Coordinator), UVRI, AHPRC
-- **Flower Framework:** Federated learning coordination
-- **GA4GH Standards:** DRS, Passport/AAI, WES integration
-- **Privacy Protection:** Differential privacy & secure aggregation
+## 📁 Repository Structure
 
-### **🔒 Privacy & Security**
-- Reference panels never leave source institutions
-- Gradient-level differential privacy
-- Secure multi-party computation
-- GA4GH Passport authentication
+```
+federated-gwas-workshop-2025/
+├── .github/workflows/          # CI/CD automation
+│   ├── docker-build.yml        # Multi-registry Docker builds
+│   └── security-scan.yml       # Security scanning
+├── docker/                     # Container configuration
+│   ├── Dockerfile              # GWAS tools container
+│   └── README.md               # Docker documentation
+├── workflows/                  # WDL workflows
+│   └── gwas_pipeline.wdl       # Main GWAS pipeline
+├── tasks/                      # Individual WDL tasks
+│   ├── quality_control.wdl     # QC and filtering
+│   ├── population_stratification.wdl  # PCA analysis
+│   ├── association_testing.wdl # GWAS analysis
+│   └── results_processing.wdl  # Results and plots
+├── inputs/                     # Configuration files
+│   ├── test_gensetB.json       # DockerHub config
+│   ├── test_gensetB_ghcr.json  # GitHub Registry config
+│   └── test_local.json         # Local testing template
+├── scripts/                    # Execution scripts
+│   ├── run_pipeline.sh         # Main execution script
+│   ├── test_gensetB.sh         # Test with gensetB data
+│   ├── test_ghcr.sh           # GitHub Registry testing
+│   ├── test_docker_build.sh    # Local Docker testing
+│   └── validate_inputs.sh      # Input validation
+├── tests/data/                 # Test datasets
+│   ├── gensetB.bed/bim/fam     # PLINK genotype files
+│   ├── gensetB_phenotypes.txt  # Phenotype data
+│   └── gensetB_covariates.txt  # Covariate data
+├── docs/                       # Documentation
+│   ├── USAGE.md                # Detailed usage guide
+│   ├── DOCKER_CI_SETUP.md      # CI/CD setup instructions
+│   └── GITHUB_CONTAINER_REGISTRY.md  # Registry guide
+└── README.md                   # This file
+```
 
-### **📱 Interactive Documentation**
-- **7 Mermaid Diagrams:** Architecture, timeline, workflows
-- **HTML Visualization:** Self-contained, shareable
-- **PDF Export:** Print-ready documentation
-- **Mobile Responsive:** Works on all devices
-- **🎨 Theme-based Design:** Classic (brown), ML (blue), Diagrams (purple)
+## 🔬 Pipeline Workflow
 
-## 🛠️ Technical Stack
+### 1. Quality Control (`tasks/quality_control.wdl`)
+- **Input validation** and format conversion (VCF → PLINK if needed)
+- **Variant filtering**: MAF, call rate, Hardy-Weinberg equilibrium
+- **Sample filtering**: Relatedness, missing data
+- **QC reports and plots**: Distribution plots, summary statistics
 
-- **🤖 ML Framework:** PyTorch + Flower
-- **🔐 Standards:** GA4GH DRS, Passport/AAI, WES
-- **📊 Data Format:** VCF/BCF genomic variants
-- **🔒 Privacy:** Differential Privacy + Secure Aggregation
-- **📋 Workflow:** WDL/CWL execution
-- **🌐 Visualization:** Mermaid.js diagrams
+### 2. Population Stratification (`tasks/population_stratification.wdl`)
+- **LD pruning**: Remove correlated variants for PCA
+- **Principal Component Analysis**: Calculate population structure
+- **Outlier detection**: Identify population outliers
+- **PCA plots**: Visualize population structure and variance explained
 
-## 🔧 Development & Maintenance
+### 3. Association Testing (`tasks/association_testing.wdl`)
+- **Covariate integration**: Merge phenotypes, covariates, and PCs
+- **Statistical testing**: Linear/logistic regression using PLINK
+- **Results processing**: Standardize output format
+- **Quality metrics**: Calculate genomic inflation factor (λ)
 
-### **Updating Diagrams**
-1. Edit `docs/diagrams/federated_imputation_diagrams.md`
-2. Run `python3 scripts/generate_simple_html.py`
-3. View updated `docs/diagrams/federated_imputation_simple.html`
+### 4. Results Processing (`tasks/results_processing.wdl`)
+- **Visualization**: Manhattan plots, QQ plots
+- **Hit identification**: Genome-wide significant variants
+- **Meta-analysis prep**: Standardized output format
+- **Summary reports**: Comprehensive analysis summary
 
-### **Updating Documentation**
-1. Edit any markdown file (`.md`)
-2. Run `python3 scripts/generate_markdown_html.py <markdown_file>`
-3. HTML will be generated in the same folder
+## 🐳 Docker Support
 
-### **Adding New Content**
-- **Classic approach:** Add to `docs/classic/`
-- **ML implementation:** Add to `docs/ml/`
-- **Diagrams:** Add to `docs/diagrams/`
-- **Scripts:** Add to `scripts/`
+### Multi-Registry Configuration
 
-## 🎨 **HTML Features**
+The pipeline supports both DockerHub and GitHub Container Registry:
 
-### **🌟 Beautiful Design**
-- **Theme-based colors:** Classic (brown), ML (blue), General (purple)
-- **Professional typography:** Inter and JetBrains Mono fonts
-- **Responsive layout:** Works on desktop, tablet, mobile
-- **Print-optimized:** Perfect PDF exports
+| Registry | Image | Usage |
+|----------|-------|-------|
+| **DockerHub** | `mamana/gwas-tools:latest` | Traditional registry |
+| **GitHub Container Registry** | `ghcr.io/mamanambiya/gwas-tools:latest` | GitHub-integrated |
 
-### **📋 Auto-generated Features**
-- **Table of Contents:** Automatically generated from headings
-- **Smooth navigation:** Click any heading in TOC
-- **ASCII art enhancement:** Special styling for diagrams
-- **Export instructions:** Built-in PDF export guidance
+### Included Tools
 
-### **🔧 Technical Features**
-- **Self-contained:** No external dependencies except fonts/icons
-- **Fast loading:** Optimized CSS and minimal JavaScript
-- **Accessible:** Proper ARIA labels and keyboard navigation
-- **Cross-browser:** Works in all modern browsers
+- **PLINK 2.0**: Genomic analysis toolkit
+- **bcftools**: VCF/BCF manipulation
+- **R**: Statistical computing with genomics packages
+- **Python**: Data processing and analysis
+- **System tools**: Standard Linux utilities
 
-## 🌍 Research Context
+## 🧪 Test Data
 
-**GA4GH Hackathon 2025 - Stream 3: Case Studies**
-- **Constraint:** Reference panels cannot be accessed directly
-- **Goal:** Federated imputation across African institutions
-- **Standards:** Full GA4GH compliance for interoperability
-- **Timeline:** 5-day hackathon implementation (July 28 - August 1)
+The repository includes the **gensetB** dataset:
 
-## 📞 Support & Collaboration
+- **Samples**: 165 individuals
+- **Variants**: 10,000+ SNPs
+- **Format**: PLINK binary files (.bed/.bim/.fam)
+- **Phenotypes**: Quantitative trait
+- **Covariates**: Sex, age, batch effects
 
-For questions about:
-- **System Architecture:** See `federated_imputation_implementation.md`
-- **Classic Methods:** See `docs/classic/` (markdown + HTML)
-- **ML Implementation:** See `docs/ml/` (markdown + HTML)
-- **Diagram Viewing:** See `docs/diagrams/README_DIAGRAMS.md`
-- **HTML Generation:** See `scripts/generate_markdown_html.py`
+## 📊 Expected Outputs
+
+### Quality Control
+- `*_qc_report.txt`: Summary statistics
+- `*_qc_plots.pdf`: QC distribution plots
+- `*.bed/bim/fam`: Filtered genotype files
+
+### Population Stratification
+- `*.eigenvec`: Principal components
+- `*.eigenval`: Eigenvalues
+- `*_plots.pdf`: PCA plots and scree plot
+
+### Association Results
+- `*_processed.txt`: GWAS results
+- `*_manhattan.pdf/.png`: Manhattan plot
+- `*_qq.pdf/.png`: QQ plot
+- `*_top_hits.txt`: Significant associations
+- `*_meta_ready.txt`: Meta-analysis format
+
+## 🌍 Platform Compatibility
+
+This pipeline is tested and compatible with:
+
+- ✅ **Local execution**: Cromwell, miniwdl
+- ✅ **Terra/AnVIL**: Google Cloud platform
+- ✅ **DNAstack**: Workbench platform
+- ✅ **AWS Batch**: Amazon cloud platform
+- ✅ **Azure**: Microsoft cloud platform
+- ✅ **HPC clusters**: SLURM, PBS, SGE
+
+## 📚 Documentation
+
+- **[Usage Guide](docs/USAGE.md)**: Detailed instructions for running the pipeline
+- **[Docker CI Setup](docs/DOCKER_CI_SETUP.md)**: GitHub Actions configuration
+- **[GitHub Container Registry](docs/GITHUB_CONTAINER_REGISTRY.md)**: Registry setup and usage
+- **[Project Structure](PROJECT_STRUCTURE.md)**: Directory organization
+- **[Quick Start Guide](QUICKSTART_GENSETB.md)**: Fast setup with test data
+
+## 🤝 Contributing
+
+We welcome contributions from the genomics community! This project follows open science principles.
+
+### Getting Started
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+### Areas for Contribution
+- Additional quality control metrics
+- Support for additional file formats
+- Performance optimizations
+- Documentation improvements
+- Integration with other genomics tools
+
+## 🔧 Configuration
+
+### Runtime Resources
+
+Default resource allocations:
+- **CPU**: 4 cores
+- **Memory**: 16GB RAM
+- **Disk**: 50GB SSD
+- **Docker**: `mamana/gwas-tools:latest`
+
+### Customization
+
+All parameters can be customized via input JSON:
+
+```json
+{
+  "GWASPipeline.cpu": 8,
+  "GWASPipeline.memory_gb": 32,
+  "GWASPipeline.maf_threshold": 0.005,
+  "GWASPipeline.pvalue_threshold": 1e-8,
+  "GWASPipeline.docker_image": "ghcr.io/mamanambiya/gwas-tools:latest"
+}
+```
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+1. **Docker permission errors**: Ensure Docker is running and user has permissions
+2. **Memory errors**: Increase memory allocation for large datasets
+3. **File not found**: Check file paths in input JSON
+4. **Network issues**: Verify Docker image accessibility
+
+### Getting Help
+
+- **GitHub Issues**: Report bugs and request features
+- **Discussions**: Community support and questions
+- **Documentation**: Comprehensive guides in `docs/`
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **GA4GH**: Global Alliance for Genomics and Health
+- **University of Cape Town**: African genomics research
+- **PLINK Development Team**: Genomic analysis tools
+- **Broad Institute**: Cromwell workflow engine
+- **Docker Community**: Containerization platform
+
+## 📞 Contact
+
+- **Author**: Mamana Mbiyavanga
+- **Email**: mamana.mbiyavanga@uct.ac.za
+- **Institution**: University of Cape Town
+- **GitHub**: [@mamanambiya](https://github.com/mamanambiya)
+
+## 🧬 Citation
+
+If you use this pipeline in your research, please cite:
+
+```
+Mbiyavanga, M. et al. (2025). Federated GWAS Workshop 2025: A WDL-based pipeline 
+for federated genome-wide association studies. GA4GH Hackathon 2025.
+```
 
 ---
 
-**🎉 Ready to implement federated genomic imputation with privacy preservation and GA4GH standards compliance!**
-
-*✨ Now featuring beautiful HTML versions of all major documentation with theme-based styling and professional layouts.* # federated-gwas-workshop-2025
+**Ready to revolutionize federated genomics research!** 🌍🧬 # federated-gwas-workshop-2025
+# federated-gwas-workshop-2025

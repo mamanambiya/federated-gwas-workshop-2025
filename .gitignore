@@ -1,0 +1,32 @@
+cromwell.jar
+outputs/
+cromwell-executions/
+cromwell-workflow-logs/
+.history/
+*.log
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+.vscode/
+.idea/
+test_data/
+*.tmp
+*.temp # Ignore large files
+*.bed
+*.bim  
+*.fam
+*.vcf.gz
+*.vcf
+*.bcf
+*.pgen
+*.pvar
+*.psam
+# Ignore any files larger than 50MB
+*.gz
+*.tar.gz
+*.zip
+# Ignore LFS and temporary files
+.git/lfs/
+*.tmp
+*.temp

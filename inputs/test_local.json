@@ -1,0 +1,19 @@
+{
+  "GWASPipeline.genotype_file": "/path/to/test/genotypes.bed",
+  "GWASPipeline.phenotype_file": "/path/to/test/phenotypes.txt",
+  "GWASPipeline.covariate_file": "/path/to/test/covariates.txt",
+  "GWASPipeline.trait_name": "BMI",
+  "GWASPipeline.trait_type": "quantitative",
+  "GWASPipeline.output_prefix": "test_gwas_analysis",
+  "GWASPipeline.maf_threshold": 0.05,
+  "GWASPipeline.call_rate_threshold": 0.90,
+  "GWASPipeline.hwe_pvalue": 1e-6,
+  "GWASPipeline.relatedness_threshold": 0.125,
+  "GWASPipeline.num_pcs": 10,
+  "GWASPipeline.association_method": "linear",
+  "GWASPipeline.pvalue_threshold": 5e-8,
+  "GWASPipeline.include_plots": true,
+  "GWASPipeline.cpu": 4,
+  "GWASPipeline.memory_gb": 16,
+  "GWASPipeline.docker_image": "mamana/gwas-tools:latest"
+} 

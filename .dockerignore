@@ -1,0 +1,58 @@
+# Git and version control
+.git/
+.gitignore
+.github/
+.history/
+
+# Documentation
+README.md
+docs/
+*.md
+LICENSE
+
+# Test data and outputs
+tests/data/
+outputs/
+cromwell-executions/
+cromwell-workflow-logs/
+
+# Build artifacts and logs
+*.log
+*.tmp
+*.temp
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local development files
+cromwell.jar
+inputs/
+scripts/
+workflows/
+tasks/
+
+# Container registry files
+.dockerignore
+
+# Large test files
+*.bed
+*.bim
+*.fam
+*.vcf.gz
+*.vcf
+*.bcf
+
+# Temporary directories
+tmp/
+temp/ 

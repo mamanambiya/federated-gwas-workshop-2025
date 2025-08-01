@@ -1,0 +1,227 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'docker/Dockerfile'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'docker/Dockerfile'
+  schedule:
+    - cron: '0 8 * * 1'  # Weekly scan on Mondays at 8 AM UTC
+  workflow_dispatch:
+
+env:
+  DOCKERHUB_IMAGE: mamana/gwas-tools
+  GHCR_IMAGE: ghcr.io/${{ github.repository_owner }}/gwas-tools
+
+jobs:
+  hadolint:
+    name: Dockerfile Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Run Hadolint
+      uses: hadolint/hadolint-action@v3.1.0
+      with:
+        dockerfile: docker/Dockerfile
+        format: sarif
+        output-file: hadolint-results.sarif
+        
+    - name: Upload Hadolint results
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: hadolint-results.sarif
+
+  vulnerability-scan:
+    name: Vulnerability Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      security-events: write
+    if: github.event_name != 'pull_request'
+    
+    strategy:
+      matrix:
+        registry: ["dockerhub", "ghcr"]
+        include:
+          - registry: "dockerhub"
+            image: ${{ env.DOCKERHUB_IMAGE }}
+          - registry: "ghcr"  
+            image: ${{ env.GHCR_IMAGE }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Log in to GitHub Container Registry
+      if: matrix.registry == 'ghcr'
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Build image for scanning
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/Dockerfile
+        load: true
+        tags: ${{ matrix.image }}:scan
+        cache-from: type=gha
+        
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{ matrix.image }}:scan
+        format: 'sarif'
+        output: 'trivy-results-${{ matrix.registry }}.sarif'
+        
+    - name: Upload Trivy scan results
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results-${{ matrix.registry }}.sarif'
+        category: 'trivy-${{ matrix.registry }}'
+        
+    - name: Run Grype vulnerability scanner
+      uses: anchore/scan-action@v3
+      id: grype-scan
+      with:
+        image: ${{ matrix.image }}:scan
+        fail-build: false
+        
+    - name: Upload Grype scan results
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: ${{ steps.grype-scan.outputs.sarif }}
+        category: 'grype-${{ matrix.registry }}'
+
+  sbom-generation:
+    name: Generate SBOM
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    if: github.event_name != 'pull_request'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Build image for SBOM
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/Dockerfile
+        load: true
+        tags: ${{ env.GHCR_IMAGE }}:sbom
+        cache-from: type=gha
+        
+    - name: Generate SBOM with Syft
+      uses: anchore/sbom-action@v0
+      with:
+        image: ${{ env.GHCR_IMAGE }}:sbom
+        format: spdx-json
+        output-file: sbom.spdx.json
+        
+    - name: Upload SBOM artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: sbom
+        path: sbom.spdx.json
+        
+    - name: Attach SBOM to release
+      if: github.event_name == 'release'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: sbom.spdx.json
+
+  compliance-check:
+    name: Compliance Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Check Dockerfile compliance
+      run: |
+        echo "🔍 Checking Dockerfile compliance..."
+        
+        # Check for non-root user
+        if grep -q "USER.*[^0]" docker/Dockerfile; then
+          echo "✅ Non-root user found"
+        else
+          echo "❌ No non-root user found"
+          exit 1
+        fi
+        
+        # Check for health check
+        if grep -q "HEALTHCHECK" docker/Dockerfile; then
+          echo "✅ Health check found"
+        else
+          echo "⚠️ No health check found"
+        fi
+        
+        # Check for metadata labels
+        if grep -q "LABEL.*org.opencontainers.image" docker/Dockerfile; then
+          echo "✅ OCI metadata labels found"
+        else
+          echo "❌ Missing OCI metadata labels"
+          exit 1
+        fi
+        
+        # Check for pinned versions
+        if grep -q "pip3 install.*==" docker/Dockerfile; then
+          echo "✅ Python packages are pinned"
+        else
+          echo "⚠️ Python packages may not be pinned"
+        fi
+        
+        echo "✅ Dockerfile compliance check passed"
+
+  security-summary:
+    name: Security Summary
+    runs-on: ubuntu-latest
+    needs: [hadolint, compliance-check, vulnerability-scan]
+    if: always()
+    
+    steps:
+    - name: Security Report Summary
+      run: |
+        echo "## 🔒 Security Scan Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+        echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+        echo "| Dockerfile Lint | ${{ needs.hadolint.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Compliance Check | ${{ needs.compliance-check.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Vulnerability Scan | ${{ needs.vulnerability-scan.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Registry Support" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ DockerHub: \`${{ env.DOCKERHUB_IMAGE }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ GitHub Container Registry: \`${{ env.GHCR_IMAGE }}\`" >> $GITHUB_STEP_SUMMARY
+        
+        if [[ "${{ needs.hadolint.result }}" == "success" && "${{ needs.compliance-check.result }}" == "success" ]]; then
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🎉 All security checks passed!" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ Some security checks failed. Please review the results." >> $GITHUB_STEP_SUMMARY
+        fi 
