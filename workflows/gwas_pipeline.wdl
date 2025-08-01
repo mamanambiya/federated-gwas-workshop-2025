@@ -46,7 +46,7 @@ workflow GWASPipeline {
         # Runtime parameters
         Int cpu = 4
         Int memory_gb = 16
-        String docker_image = "mamana/gwas-tools:latest"
+        String docker_image = "ghcr.io/mamanambiya/gwas-tools:latest"
     }
 
     # Step 1: Quality Control

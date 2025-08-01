@@ -4,7 +4,7 @@
   "final_workflow_outputs_dir": "outputs",
   "final_workflow_log_dir": "cromwell-workflow-logs",
   "default_runtime_attributes": {
-    "docker": "ghcr.io/mamana/gwas-tools:latest",
+    "docker": "ghcr.io/mamanambiya/gwas-tools:latest",
     "cpu": 2,
     "memory": "4GB",
     "disks": "local-disk 50 SSD"

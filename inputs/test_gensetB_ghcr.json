@@ -15,5 +15,5 @@
   "GWASPipeline.include_plots": true,
   "GWASPipeline.cpu": 4,
   "GWASPipeline.memory_gb": 16,
-  "GWASPipeline.docker_image": "ghcr.io/mamana/gwas-tools:latest"
+  "GWASPipeline.docker_image": "ghcr.io/mamanambiya/gwas-tools:latest"
 } 

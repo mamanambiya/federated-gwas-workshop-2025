@@ -1,25 +1,25 @@
 # Federated GWAS Workshop 2025
 
-🧬 **A comprehensive WDL-based pipeline for federated genome-wide association studies (GWAS)**
+**A comprehensive WDL-based pipeline for federated genome-wide association studies (GWAS)**
 
 Developed for the **GA4GH Hackathon 2025** by the **African Genomics Team** at the University of Cape Town.
 
-## 🎯 Overview
+## Overview
 
 This repository contains a complete, production-ready GWAS analysis pipeline designed for federated genomic research. The pipeline is built using the **Workflow Description Language (WDL)** and includes containerized tools, automated testing, and comprehensive documentation.
 
-### ✨ Key Features
+### Key Features
 
-- 🔬 **Complete GWAS Pipeline**: Quality control, population stratification, association testing, and results processing
-- 🐳 **Containerized**: Docker containers with PLINK, R, Python, and all dependencies
-- 🔄 **Multi-Registry Support**: Compatible with both DockerHub and GitHub Container Registry
-- 🤖 **Automated CI/CD**: GitHub Actions for building, testing, and security scanning
-- 🧪 **Ready-to-Use Test Data**: Includes gensetB dataset for immediate testing
-- 📊 **Rich Visualizations**: Manhattan plots, QQ plots, PCA plots, and QC reports
-- 🌍 **Federated Ready**: Designed for distributed genomic analysis
-- 📚 **Comprehensive Documentation**: Detailed usage guides and setup instructions
+- **Complete GWAS Pipeline**: Quality control, population stratification, association testing, and results processing
+- **Containerized**: Docker containers with PLINK, R, Python, and all dependencies
+- **Multi-Registry Support**: Compatible with both DockerHub and GitHub Container Registry
+- **Automated CI/CD**: GitHub Actions for building, testing, and security scanning
+- **Ready-to-Use Test Data**: Includes gensetB dataset for immediate testing
+- **Rich Visualizations**: Manhattan plots, QQ plots, PCA plots, and QC reports
+- **Federated Ready**: Designed for distributed genomic analysis
+- **Comprehensive Documentation**: Detailed usage guides and setup instructions
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -41,11 +41,11 @@ cd federated-gwas-workshop-2025
 ### Option 2: Docker Registry Options
 
 ```bash
-# Using DockerHub (default)
+# Using GitHub Container Registry (default)
 ./scripts/run_pipeline.sh inputs/test_gensetB.json
 
-# Using GitHub Container Registry
-./scripts/run_pipeline.sh inputs/test_gensetB_ghcr.json
+# Using DockerHub (alternative)
+# Edit input JSON to use "mamana/gwas-tools:latest" instead of "ghcr.io/mamanambiya/gwas-tools:latest"
 ```
 
 ### Option 3: Manual Execution
@@ -58,7 +58,7 @@ wget -O cromwell.jar https://github.com/broadinstitute/cromwell/releases/downloa
 java -jar cromwell.jar run workflows/gwas_pipeline.wdl -i inputs/test_gensetB.json
 ```
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 federated-gwas-workshop-2025/
@@ -96,7 +96,7 @@ federated-gwas-workshop-2025/
 └── README.md                   # This file
 ```
 
-## 🔬 Pipeline Workflow
+## Pipeline Workflow
 
 ### 1. Quality Control (`tasks/quality_control.wdl`)
 - **Input validation** and format conversion (VCF → PLINK if needed)
@@ -122,7 +122,7 @@ federated-gwas-workshop-2025/
 - **Meta-analysis prep**: Standardized output format
 - **Summary reports**: Comprehensive analysis summary
 
-## 🐳 Docker Support
+## Docker Support
 
 ### Multi-Registry Configuration
 
@@ -130,8 +130,8 @@ The pipeline supports both DockerHub and GitHub Container Registry:
 
 | Registry | Image | Usage |
 |----------|-------|-------|
-| **DockerHub** | `mamana/gwas-tools:latest` | Traditional registry |
-| **GitHub Container Registry** | `ghcr.io/mamanambiya/gwas-tools:latest` | GitHub-integrated |
+| **GitHub Container Registry** | `ghcr.io/mamanambiya/gwas-tools:latest` | Default (GitHub-integrated) |
+| **DockerHub** | `mamana/gwas-tools:latest` | Alternative registry |
 
 ### Included Tools
 
@@ -141,7 +141,7 @@ The pipeline supports both DockerHub and GitHub Container Registry:
 - **Python**: Data processing and analysis
 - **System tools**: Standard Linux utilities
 
-## 🧪 Test Data
+## Test Data
 
 The repository includes the **gensetB** dataset:
 
@@ -151,7 +151,7 @@ The repository includes the **gensetB** dataset:
 - **Phenotypes**: Quantitative trait
 - **Covariates**: Sex, age, batch effects
 
-## 📊 Expected Outputs
+## Expected Outputs
 
 ### Quality Control
 - `*_qc_report.txt`: Summary statistics
@@ -170,18 +170,18 @@ The repository includes the **gensetB** dataset:
 - `*_top_hits.txt`: Significant associations
 - `*_meta_ready.txt`: Meta-analysis format
 
-## 🌍 Platform Compatibility
+## Platform Compatibility
 
 This pipeline is tested and compatible with:
 
-- ✅ **Local execution**: Cromwell, miniwdl
-- ✅ **Terra/AnVIL**: Google Cloud platform
-- ✅ **DNAstack**: Workbench platform
-- ✅ **AWS Batch**: Amazon cloud platform
-- ✅ **Azure**: Microsoft cloud platform
-- ✅ **HPC clusters**: SLURM, PBS, SGE
+- **Local execution**: Cromwell, miniwdl
+- **Terra/AnVIL**: Google Cloud platform
+- **DNAstack**: Workbench platform
+- **AWS Batch**: Amazon cloud platform
+- **Azure**: Microsoft cloud platform
+- **HPC clusters**: SLURM, PBS, SGE
 
-## 📚 Documentation
+## Documentation
 
 - **[Usage Guide](docs/USAGE.md)**: Detailed instructions for running the pipeline
 - **[Docker CI Setup](docs/DOCKER_CI_SETUP.md)**: GitHub Actions configuration
@@ -189,7 +189,7 @@ This pipeline is tested and compatible with:
 - **[Project Structure](PROJECT_STRUCTURE.md)**: Directory organization
 - **[Quick Start Guide](QUICKSTART_GENSETB.md)**: Fast setup with test data
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions from the genomics community! This project follows open science principles.
 
@@ -207,7 +207,7 @@ We welcome contributions from the genomics community! This project follows open 
 - Documentation improvements
 - Integration with other genomics tools
 
-## 🔧 Configuration
+## Configuration
 
 ### Runtime Resources
 
@@ -215,7 +215,7 @@ Default resource allocations:
 - **CPU**: 4 cores
 - **Memory**: 16GB RAM
 - **Disk**: 50GB SSD
-- **Docker**: `mamana/gwas-tools:latest`
+- **Docker**: `ghcr.io/mamanambiya/gwas-tools:latest`
 
 ### Customization
 
@@ -231,7 +231,7 @@ All parameters can be customized via input JSON:
 }
 ```
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -246,11 +246,11 @@ All parameters can be customized via input JSON:
 - **Discussions**: Community support and questions
 - **Documentation**: Comprehensive guides in `docs/`
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **GA4GH**: Global Alliance for Genomics and Health
 - **University of Cape Town**: African genomics research
@@ -258,14 +258,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Broad Institute**: Cromwell workflow engine
 - **Docker Community**: Containerization platform
 
-## 📞 Contact
+## Contact
 
 - **Author**: Mamana Mbiyavanga
 - **Email**: mamana.mbiyavanga@uct.ac.za
 - **Institution**: University of Cape Town
 - **GitHub**: [@mamanambiya](https://github.com/mamanambiya)
 
-## 🧬 Citation
+## Citation
 
 If you use this pipeline in your research, please cite:
 
@@ -276,5 +276,5 @@ for federated genome-wide association studies. GA4GH Hackathon 2025.
 
 ---
 
-**Ready to revolutionize federated genomics research!** 🌍🧬 # federated-gwas-workshop-2025
+**Ready to revolutionize federated genomics research!**
 # federated-gwas-workshop-2025

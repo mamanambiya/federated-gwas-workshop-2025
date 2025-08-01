@@ -41,7 +41,7 @@ fi
 # Pull container
 echo "🐳 Checking Docker container..."
 if command -v docker &> /dev/null; then
-    docker pull mamana/gwas-tools:latest || echo "Warning: Could not pull container. Continuing with local version."
+    docker pull ghcr.io/mamanambiya/gwas-tools:latest || echo "Warning: Could not pull container. Continuing with local version."
 else
     echo "Warning: Docker not found. Make sure the container is available in your execution environment."
 fi

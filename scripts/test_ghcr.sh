@@ -28,15 +28,15 @@ echo ""
 
 echo "🐳 Registry Information:"
 echo "  Registry: GitHub Container Registry (ghcr.io)"
-echo "  Image: ghcr.io/mamana/gwas-tools:latest"
+echo "  Image: ghcr.io/mamanambiya/gwas-tools:latest"
 echo "  Authentication: GitHub Token (automatic for public images)"
 echo ""
 
 # Check if image is accessible
 echo "🔍 Testing Docker image access..."
-if docker pull ghcr.io/mamana/gwas-tools:latest >/dev/null 2>&1; then
+if docker pull ghcr.io/mamanambiya/gwas-tools:latest >/dev/null 2>&1; then
     echo "✅ Successfully pulled image from GitHub Container Registry"
-elif docker images ghcr.io/mamana/gwas-tools:latest --format "{{.Repository}}" 2>/dev/null | grep -q "ghcr.io/mamana/gwas-tools"; then
+elif docker images ghcr.io/mamanambiya/gwas-tools:latest --format "{{.Repository}}" 2>/dev/null | grep -q "ghcr.io/mamanambiya/gwas-tools"; then
     echo "✅ Image already available locally"
 else
     echo "⚠️  Cannot pull image from GitHub Container Registry"
@@ -47,7 +47,7 @@ else
     if docker pull mamana/gwas-tools:latest >/dev/null 2>&1; then
         echo "✅ Using DockerHub image as fallback"
         # Update the input JSON to use DockerHub temporarily
-        sed 's|ghcr.io/mamana/gwas-tools|mamana/gwas-tools|g' "$INPUT_JSON" > "${INPUT_JSON}.fallback"
+        sed 's|ghcr.io/mamanambiya/gwas-tools|mamana/gwas-tools|g' "$INPUT_JSON" > "${INPUT_JSON}.fallback"
         INPUT_JSON="${INPUT_JSON}.fallback"
     else
         echo "❌ No Docker image available. Please build locally first:"
@@ -90,7 +90,7 @@ echo "    ✅ Built-in vulnerability scanning"
 echo ""
 echo "  Usage in WDL:"
 echo "    DockerHub:     docker: \"mamana/gwas-tools:latest\""
-echo "    GHCR:          docker: \"ghcr.io/mamana/gwas-tools:latest\""
+echo "    GHCR:          docker: \"ghcr.io/mamanambiya/gwas-tools:latest\""
 echo ""
 
 # Estimate runtime
@@ -120,7 +120,7 @@ fi
 
 echo ""
 echo "🚀 Starting GWAS Pipeline execution..."
-echo "   Using GitHub Container Registry: ghcr.io/mamana/gwas-tools:latest"
+echo "   Using GitHub Container Registry: ghcr.io/mamanambiya/gwas-tools:latest"
 echo "   This may take 30-60 minutes depending on your system."
 echo "   Progress will be logged to outputs/test_${DATASET}_ghcr_$(date +%Y%m%d_%H%M%S)/cromwell.log"
 echo ""

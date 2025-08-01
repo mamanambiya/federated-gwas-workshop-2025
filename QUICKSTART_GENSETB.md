@@ -1,10 +1,10 @@
 # Quick Start: GWAS Analysis with gensetB Dataset
 
-## 🚀 Ready-to-Run Test
+## Ready-to-Run Test
 
 The GWAS pipeline is now configured with the gensetB dataset from your tests directory.
 
-## 📊 Dataset Overview
+## Dataset Overview
 
 - **Sample Size**: 2,002 individuals
 - **Variants**: 1,154,245 SNPs (genome-wide coverage)
@@ -13,7 +13,7 @@ The GWAS pipeline is now configured with the gensetB dataset from your tests dir
 - **Sex Distribution**: 971 males, 1,031 females
 - **Chromosomes**: Genome-wide coverage (chr1-22)
 
-## ⚡ Three Ways to Run
+## Three Ways to Run
 
 ### 1. Full Interactive Test (Recommended)
 ```bash
@@ -33,7 +33,7 @@ The GWAS pipeline is now configured with the gensetB dataset from your tests dir
 ```
 *Verify configuration without running analysis*
 
-## ⏱️ Expected Timeline
+## Expected Timeline
 
 - **Total Runtime**: 30-60 minutes
 - **Quality Control**: 5-10 min (filtering ~1.1M → ~800K variants)
@@ -41,7 +41,7 @@ The GWAS pipeline is now configured with the gensetB dataset from your tests dir
 - **Association Testing**: 15-30 min (linear regression)
 - **Results Processing**: 2-5 min (plots + meta-analysis files)
 
-## 📁 Generated Outputs
+## Generated Outputs
 
 ### Quality Control Results
 - `*_qc_report.txt` - Summary statistics
@@ -61,7 +61,7 @@ The GWAS pipeline is now configured with the gensetB dataset from your tests dir
 - `*_meta_ready.txt` - Standardized summary statistics
 - `*_summary.txt` - Analysis report
 
-## 🔧 Pre-configured Settings
+## Pre-configured Settings
 
 The test is optimized for the gensetB dataset:
 
@@ -78,7 +78,7 @@ The test is optimized for the gensetB dataset:
 }
 ```
 
-## 🎯 What to Expect
+## What to Expect
 
 ### Quality Control
 - ~300K variants removed (low MAF/HWE/call rate)
@@ -96,22 +96,22 @@ The test is optimized for the gensetB dataset:
 - QQ plot for assessing genomic inflation (λ)
 - Summary statistics ready for meta-analysis
 
-## 🔄 Federated Analysis Ready
+## Federated Analysis Ready
 
 The pipeline generates privacy-preserving outputs perfect for federated GWAS:
-- ✅ Only summary statistics (no individual data)
-- ✅ Standardized meta-analysis format
-- ✅ Harmonized allele coding
-- ✅ Compatible with common meta-analysis tools
+- Only summary statistics (no individual data)
+- Standardized meta-analysis format
+- Harmonized allele coding
+- Compatible with common meta-analysis tools
 
-## 🚨 System Requirements
+## System Requirements
 
 - **CPU**: 4+ cores recommended
 - **Memory**: 16GB+ recommended
 - **Storage**: 2GB+ free space for outputs
 - **Docker**: Required for containerized execution
 
-## 🆘 Need Help?
+## Need Help?
 
 ```bash
 # Check dataset details
@@ -124,7 +124,7 @@ cat README.md
 cat PROJECT_STRUCTURE.md
 ```
 
-## 🎉 Ready to Start!
+## Ready to Start!
 
 Run the interactive test to begin your GWAS analysis:
 

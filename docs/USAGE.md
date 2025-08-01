@@ -184,4 +184,11 @@ Update input JSON:
 {
   "GWASPipeline.docker_image": "my-gwas-tools:latest"
 }
+```
+
+Or use GitHub Container Registry (default):
+```json
+{
+  "GWASPipeline.docker_image": "ghcr.io/mamanambiya/gwas-tools:latest"
+}
 ``` 
