@@ -1,0 +1,19 @@
+{
+  "GWASPipeline.genotype_file": "tests/data/gensetB.bed",
+  "GWASPipeline.phenotype_file": "tests/data/gensetB_phenotypes.txt",
+  "GWASPipeline.covariate_file": "tests/data/gensetB_covariates.txt",
+  "GWASPipeline.trait_name": "quantitative_trait",
+  "GWASPipeline.trait_type": "quantitative",
+  "GWASPipeline.output_prefix": "gensetB_gwas_results",
+  "GWASPipeline.maf_threshold": 0.01,
+  "GWASPipeline.call_rate_threshold": 0.95,
+  "GWASPipeline.hwe_pvalue": 1e-6,
+  "GWASPipeline.relatedness_threshold": 0.125,
+  "GWASPipeline.num_pcs": 10,
+  "GWASPipeline.association_method": "linear",
+  "GWASPipeline.pvalue_threshold": 5e-8,
+  "GWASPipeline.include_plots": true,
+  "GWASPipeline.cpu": 4,
+  "GWASPipeline.memory_gb": 16,
+  "GWASPipeline.docker_image": "ghcr.io/mamanambiya/gwas-tools:latest"
+} 
